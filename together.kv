@@ -1,0 +1,76 @@
+# main.kv
+MainScreen:
+
+<MainScreen>:
+    Image:
+        source: 'background.png'
+
+    Image:
+        source: 'character.png'
+        size_hint: .5, .5
+        
+    GridLayout:
+        cols: 2
+        pos_hint: {'right': 1, 'top': 1}
+
+        Button:
+            text: "2"
+            size_hint: None, None
+            size: "40dp", "40dp"
+
+        Button:
+            text: "3"
+            size_hint: None, None
+            size: "40dp", "40dp"
+
+        Button:
+            text: "4"
+            size_hint: None, None
+            size: "40dp", "40dp"
+
+        Button:
+            text: "Timer"
+            on_press: root.show_timer_window()
+            size_hint: None, None
+            size: "40dp", "40dp"
+            #pos_hint: {'x': 1, 'y': 1}
+    
+
+
+
+<TimerWindow>:
+    size_hint: 0.6, 0.3
+    background_color: [0, 0, 0, 0]
+    #size: 200, 400
+    
+    anchor_x: "center"
+    anchor_y: "bottom"
+
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint: 0.8, 0.8
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+        Label:
+            text: f"{duration_slider.value:.0f} mins"
+            size_hint_y: None
+            height: 30
+
+        Slider:
+            id: duration_slider
+            min: 5
+            max: 180
+            step: 5
+
+        BoxLayout:
+            spacing: 10
+
+            Button:
+                text: '>'
+                size_hint: 0.5, 1  # 50% of the width
+                on_release: print("Start button pressed")
+
+            Button:
+                text: 'X'
+                size_hint: 0.5, 1  # 50% of the width
+                on_release: root.dismiss()
