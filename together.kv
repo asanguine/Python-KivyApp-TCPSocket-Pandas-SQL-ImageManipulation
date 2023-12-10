@@ -2,11 +2,14 @@
 MainScreen:
 
 <MainScreen>:
-    Image:
-        source: 'background.png'
+    anchor_x: "center"
+    anchor_y: "bottom"
 
     Image:
-        source: 'character.png'
+        source: 'images/background.png'
+
+    Image:
+        source: 'images/character.png'
         size_hint: .5, .5
         
     GridLayout:
@@ -36,13 +39,23 @@ MainScreen:
             #pos_hint: {'x': 1, 'y': 1}
     
 
+    Label:
+        id: timer_label
+        text: ""
+        font_size: "50dp"
+        color: 0.2, 0.6, 0.5, 1
+        outline_color: 0.8, 0.4, 0.4, 1
+        outline_width: 2.4
+        size_hint: None, None
+        size: "150dp", "30dp"
+        pos_hint: {'center_x': 0.5, 'center_y': 0.8}
+
 
 
 <TimerWindow>:
+    id: timer_window
     size_hint: 0.6, 0.3
     background_color: [0, 0, 0, 0]
-    #size: 200, 400
-    
     anchor_x: "center"
     anchor_y: "bottom"
 
@@ -68,8 +81,8 @@ MainScreen:
             Button:
                 text: '>'
                 size_hint: 0.5, 1  # 50% of the width
-                on_release: print("Start button pressed")
-
+                on_release: root.start_timer(duration_slider.value); root.dismiss()
+            
             Button:
                 text: 'X'
                 size_hint: 0.5, 1  # 50% of the width
