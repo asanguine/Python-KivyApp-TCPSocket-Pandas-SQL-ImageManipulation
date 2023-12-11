@@ -6,11 +6,11 @@ MainScreen:
     anchor_y: "bottom"
 
     Image:
-        source: 'images/background.png'
+        source: 'images/backgrounds/background1.png'
 
-    Image:
-        source: 'images/character.png'
-        size_hint: .5, .5
+    #Image:
+     #   source: 'images/character.png'
+      #  size_hint: .5, .5
         
     GridLayout:
         cols: 2
@@ -27,7 +27,8 @@ MainScreen:
             size: "40dp", "40dp"
 
         Button:
-            text: "4"
+            text: "Char"
+            on_press: root.show_character_window()
             size_hint: None, None
             size: "40dp", "40dp"
 
@@ -87,3 +88,37 @@ MainScreen:
                 text: 'X'
                 size_hint: 0.5, 1  # 50% of the width
                 on_release: root.dismiss()
+
+
+
+
+<CharacterWindow>:
+    BoxLayout:
+        orientation: 'vertical'
+
+        Image:
+            id: character_image
+            source: root.load_image()
+            size_hint: 1, 0.8
+
+        BoxLayout:
+            size_hint: 1, 0.2
+
+            Button:
+                text: 'next clothe'
+                on_press: root.load_next_image('images/character/clothes')
+
+            Button:
+                text: 'next hair'
+                on_press: root.load_next_image('images/character/hairs')
+
+            Button:
+                text: 'next expression'
+                on_press: root.load_next_image('images/character/accessories')
+
+
+<ImageButton>:
+    size_hint: None, None
+    size: 80, 80
+    allow_stretch: True
+    keep_ratio: True

@@ -7,6 +7,11 @@ from kivy.core.window import Window
 from kivy.uix.slider import Slider
 from kivy.clock import Clock
 from datetime import timedelta
+from kivy.uix.image import Image
+from kivy.uix.recycleview.views import RecycleDataViewBehavior
+from kivy.properties import StringProperty
+import os
+from img_combine import combine_images, body_parts
 
 ########################  TimerWindow  ##########################
 
@@ -15,6 +20,24 @@ class TimerWindow(ModalView):
         main_screen = App.get_running_app().root
         main_screen.start_timer(duration)
 
+
+########################  CharacterWindow  ##########################
+
+class CharacterWindow(ModalView):
+    current_images = {'hair': 0, 'face': 0, 'clothes': 0, 'accessories': 0}
+
+    def load_image(self):
+        image_path = combine_images(body_parts(1,1,1))
+        return image_path
+    
+    def load_next_image(self, body_part):
+        pass
+
+
+class ImageButton(RecycleDataViewBehavior, Button):
+    source = StringProperty('')
+    pass
+
 ########################  MainScreen  ############################
 
 class MainScreen(FloatLayout):
@@ -22,6 +45,10 @@ class MainScreen(FloatLayout):
     def show_timer_window(self):
         timer_window = TimerWindow()
         timer_window.open()
+
+    def show_character_window(self):
+        character_window = CharacterWindow()
+        character_window.open()
 
 
     def on_timer_dismiss(self, instance):
