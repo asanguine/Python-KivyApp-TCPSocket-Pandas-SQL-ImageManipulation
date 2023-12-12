@@ -22,7 +22,8 @@ def body_parts(selected_clothe, selected_hair, selected_expression):
     return image_paths
 
 
-def images_count(folder_path):
+def images_count(body_part):
+    folder_path = f'images/character/{body_part}s'
     if not os.path.exists(folder_path):
         print(f"The folder {folder_path} does not exist.")
         return

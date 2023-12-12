@@ -7,11 +7,11 @@ from kivy.core.window import Window
 from kivy.uix.slider import Slider
 from kivy.clock import Clock
 from datetime import timedelta
-from kivy.uix.image import Image
+from kivy.uix.image import Image, AsyncImage
 from kivy.uix.recycleview.views import RecycleDataViewBehavior
 from kivy.properties import StringProperty
 import os
-from img_combine import combine_images, body_parts
+from img_combine import combine_images, body_parts, images_count
 
 ########################  TimerWindow  ##########################
 
@@ -24,15 +24,28 @@ class TimerWindow(ModalView):
 ########################  CharacterWindow  ##########################
 
 class CharacterWindow(ModalView):
-    current_images = {'hair': 0, 'face': 0, 'clothes': 0, 'accessories': 0}
+    current_images = {'clothe': 1, 'hair': 1, 'expression': 1}
 
     def load_image(self):
-        image_path = combine_images(body_parts(1,1,1))
+        previous_image_path = 'images/character/character.png'
+        if os.path.exists(previous_image_path):
+            os.remove(previous_image_path)
+
+        image_path = combine_images(body_parts(self.current_images['clothe'],
+                                               self.current_images['hair'],
+                                               self.current_images['expression']))
+        
+        print('load_image called')
         return image_path
     
     def load_next_image(self, body_part):
-        pass
-
+        print(f'pressed next {body_part} button')
+        image_count = images_count(body_part)
+        print(f'current: {self.current_images[body_part]}')
+        self.current_images[body_part] = (self.current_images[body_part] % image_count) + 1
+        print(f'now: {self.current_images[body_part]}')
+        self.ids.character_image.source = self.load_image()
+        self.ids.character_image.reload()
 
 class ImageButton(RecycleDataViewBehavior, Button):
     source = StringProperty('')

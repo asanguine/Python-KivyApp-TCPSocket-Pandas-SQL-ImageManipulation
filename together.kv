@@ -81,12 +81,13 @@ MainScreen:
 
             Button:
                 text: '>'
-                size_hint: 0.5, 1  # 50% of the width
+                size_hint: 0.5, 1
                 on_release: root.start_timer(duration_slider.value); root.dismiss()
-            
+
             Button:
+                #background_normal: 'images/icons/cancel.png'
                 text: 'X'
-                size_hint: 0.5, 1  # 50% of the width
+                size_hint: 0.5, 1
                 on_release: root.dismiss()
 
 
@@ -96,7 +97,7 @@ MainScreen:
     BoxLayout:
         orientation: 'vertical'
 
-        Image:
+        AsyncImage:
             id: character_image
             source: root.load_image()
             size_hint: 1, 0.8
@@ -106,15 +107,20 @@ MainScreen:
 
             Button:
                 text: 'next clothe'
-                on_press: root.load_next_image('images/character/clothes')
+                on_press: root.load_next_image('clothe');
 
             Button:
                 text: 'next hair'
-                on_press: root.load_next_image('images/character/hairs')
+                on_press: root.load_next_image('hair')
 
             Button:
                 text: 'next expression'
-                on_press: root.load_next_image('images/character/accessories')
+                on_press: root.load_next_image('expression')
+
+        Button:
+            size_hint: 1, 0.1
+            text: 'done!'
+            on_release: root.dismiss()
 
 
 <ImageButton>:
