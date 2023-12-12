@@ -12,9 +12,10 @@ from kivy.uix.recycleview.views import RecycleDataViewBehavior
 from kivy.properties import StringProperty
 import os
 from img_combine import combine_images, body_parts, images_count
+from model import create_connection, update_preset, retrieve_preset
 
 ########################  TimerWindow  ##########################
-
+user_id = 1234
 class TimerWindow(ModalView):
     def start_timer(self, duration):
         main_screen = App.get_running_app().root
@@ -24,13 +25,21 @@ class TimerWindow(ModalView):
 ########################  CharacterWindow  ##########################
 
 class CharacterWindow(ModalView):
-    current_images = {'clothe': 1, 'hair': 1, 'expression': 1}
+    DB_CONNECTION = create_connection()
+    #current_images = {'clothe': 1, 'hair': 1, 'expression': 1}
+    current_images = retrieve_preset(DB_CONNECTION, user_id) or \
+                                    {'clothe': 1, 'hair': 1, 'expression': 1}
 
     def load_image(self):
         previous_image_path = 'images/character/character.png'
         if os.path.exists(previous_image_path):
             os.remove(previous_image_path)
-
+        
+        update_preset(self.DB_CONNECTION, user_id,
+                                self.current_images['clothe'],
+                                self.current_images['hair'],
+                                self.current_images['expression'])
+        
         image_path = combine_images(body_parts(self.current_images['clothe'],
                                                self.current_images['hair'],
                                                self.current_images['expression']))
@@ -39,11 +48,8 @@ class CharacterWindow(ModalView):
         return image_path
     
     def load_next_image(self, body_part):
-        print(f'pressed next {body_part} button')
         image_count = images_count(body_part)
-        print(f'current: {self.current_images[body_part]}')
         self.current_images[body_part] = (self.current_images[body_part] % image_count) + 1
-        print(f'now: {self.current_images[body_part]}')
         self.ids.character_image.source = self.load_image()
         self.ids.character_image.reload()
 
