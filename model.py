@@ -1,6 +1,7 @@
 import sqlite3
 from sqlite3 import Error
 import os
+import uuid
 
 DB_FILE = "character_presets.db"
 
@@ -28,6 +29,22 @@ def create_presets_table(conn):
             );
         ''')
         conn.commit()
+
+    except Error as e:
+        print(e)
+
+
+def generate_user_id():
+    return str(uuid.uuid4())
+
+
+def retrieve_user_id(conn):
+    try:
+        cursor = conn.cursor()
+        cursor.execute('SELECT user_id FROM character_presets LIMIT 1;')
+        row = cursor.fetchone()
+        if row:
+            return row[0]
     except Error as e:
         print(e)
 
@@ -63,7 +80,16 @@ def initialize_database():
     conn = create_connection()
     if conn:
         create_presets_table(conn)
+        cursor = conn.cursor()
+        cursor.execute("SELECT COUNT(*) FROM character_presets")
+        count = cursor.fetchone()[0]
+        if count == 0:
+            user_id = generate_user_id()
+            cursor.execute('''
+                INSERT INTO character_presets (user_id, clothe, hair, expression)
+                VALUES (?, 1, 1, 1);
+            ''', (user_id,))
+            conn.commit()
         conn.close()
-
 
 initialize_database()
