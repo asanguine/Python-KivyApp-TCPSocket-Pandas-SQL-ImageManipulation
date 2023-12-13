@@ -10,12 +10,16 @@ from datetime import timedelta
 from kivy.uix.image import Image, AsyncImage
 from kivy.uix.recycleview.views import RecycleDataViewBehavior
 from kivy.properties import StringProperty, ObjectProperty
+from kivy.uix.behaviors import DragBehavior
+from kivy.uix.floatlayout import FloatLayout
 import os
 from img_combine import combine_images, body_parts, images_count
 from model import create_connection, update_preset, retrieve_preset
 
-########################  TimerWindow  ##########################
 user_id = 1234
+
+########################  TimerWindow  ##########################
+
 class TimerWindow(ModalView):
     def start_timer(self, duration):
         main_screen = App.get_running_app().root
@@ -64,6 +68,28 @@ class CharacterWindow(ModalView):
 class ImageButton(RecycleDataViewBehavior, Button):
     source = StringProperty('')
     pass
+
+
+class DragImage(DragBehavior, AsyncImage):
+    def on_touch_down(self, touch):
+        if self.collide_point(*touch.pos):
+            touch.grab(self)
+            return True
+        return super(DragImage, self).on_touch_down(touch)
+
+    def on_touch_move(self, touch):
+        if touch.grab_current is self:
+            self.x += touch.dx
+            self.y += touch.dy
+            return True
+        return super(DragImage, self).on_touch_move(touch)
+
+    def on_touch_up(self, touch):
+        if touch.grab_current is self:
+            touch.ungrab(self)
+            return True
+        return super(DragImage, self).on_touch_up(touch)
+
 
 ########################  MainScreen  ############################
 

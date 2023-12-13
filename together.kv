@@ -8,10 +8,13 @@ MainScreen:
     Image:
         source: 'images/backgrounds/background1.png'
 
-    AsyncImage:
+    DragImage:
         id: character_image_main
         source: root.get_character_image()
         size_hint: .5, .5
+        on_touch_down: self.on_touch_down(args[1])
+        on_touch_move: self.on_touch_move(args[1])
+        on_touch_up: self.on_touch_up(args[1])
         
     GridLayout:
         cols: 2
