@@ -8,9 +8,10 @@ MainScreen:
     Image:
         source: 'images/backgrounds/background1.png'
 
-    #Image:
-     #   source: 'images/character.png'
-      #  size_hint: .5, .5
+    AsyncImage:
+        id: character_image_main
+        source: root.get_character_image()
+        size_hint: .5, .5
         
     GridLayout:
         cols: 2
@@ -94,6 +95,7 @@ MainScreen:
 
 
 <CharacterWindow>:
+    id: character_window
     BoxLayout:
         orientation: 'vertical'
 

@@ -9,7 +9,7 @@ from kivy.clock import Clock
 from datetime import timedelta
 from kivy.uix.image import Image, AsyncImage
 from kivy.uix.recycleview.views import RecycleDataViewBehavior
-from kivy.properties import StringProperty
+from kivy.properties import StringProperty, ObjectProperty
 import os
 from img_combine import combine_images, body_parts, images_count
 from model import create_connection, update_preset, retrieve_preset
@@ -26,7 +26,6 @@ class TimerWindow(ModalView):
 
 class CharacterWindow(ModalView):
     DB_CONNECTION = create_connection()
-    #current_images = {'clothe': 1, 'hair': 1, 'expression': 1}
     current_images = retrieve_preset(DB_CONNECTION, user_id) or \
                                     {'clothe': 1, 'hair': 1, 'expression': 1}
 
@@ -43,15 +42,24 @@ class CharacterWindow(ModalView):
         image_path = combine_images(body_parts(self.current_images['clothe'],
                                                self.current_images['hair'],
                                                self.current_images['expression']))
-        
+
         print('load_image called')
         return image_path
+    
     
     def load_next_image(self, body_part):
         image_count = images_count(body_part)
         self.current_images[body_part] = (self.current_images[body_part] % image_count) + 1
         self.ids.character_image.source = self.load_image()
         self.ids.character_image.reload()
+
+        image_path = self.load_image()
+        main_screen = App.get_running_app().root
+        main_screen.character_window.ids.character_image.source = image_path
+        main_screen.character_window.ids.character_image.reload()
+
+        app = App.get_running_app()
+        app.root.update_character_image(image_path)
 
 class ImageButton(RecycleDataViewBehavior, Button):
     source = StringProperty('')
@@ -60,6 +68,14 @@ class ImageButton(RecycleDataViewBehavior, Button):
 ########################  MainScreen  ############################
 
 class MainScreen(FloatLayout):
+    DB_CONNECTION = create_connection()
+    character_window = ObjectProperty(None)
+    current_images = retrieve_preset(DB_CONNECTION, user_id) or \
+                                    {'clothe': 1, 'hair': 1, 'expression': 1}
+
+    def __init__(self, **kwargs):
+        super(MainScreen, self).__init__(**kwargs)
+        self.character_window = CharacterWindow()
 
     def show_timer_window(self):
         timer_window = TimerWindow()
@@ -68,6 +84,16 @@ class MainScreen(FloatLayout):
     def show_character_window(self):
         character_window = CharacterWindow()
         character_window.open()
+
+    def update_character_image(self, image_path):
+        character_image_main = self.ids.character_image_main
+        character_image_main.source = image_path
+        character_image_main.reload()
+
+    def get_character_image(self):
+        return combine_images(body_parts(self.current_images['clothe'],
+                                         self.current_images['hair'],
+                                         self.current_images['expression']))
 
 
     def on_timer_dismiss(self, instance):
@@ -114,6 +140,10 @@ class TogetherApp(App):
     def build(self):
         Window.size = (350, 600)
         return MainScreen()
+    
+    def show_character_window(self):
+        main_screen = self.root
+        main_screen.show_character_window()
 
 if __name__ == '__main__':
     TogetherApp().run()
