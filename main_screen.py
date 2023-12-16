@@ -36,6 +36,11 @@ class MainScreen(FloatLayout):
                                          self.current_images['hair'],
                                          self.current_images['expression']))
 
+    def get_character_pos(self):
+        x, y = self.ids.character_image_main.pos
+        return x, y
+
+
 
     def on_timer_dismiss(self, instance):
         pass
@@ -48,7 +53,6 @@ class MainScreen(FloatLayout):
 
         timer_label = self.ids.timer_label
         timer_label.text = time_str
-
 
     def start_timer(self, duration):
         total_seconds = duration * 60
@@ -70,5 +74,3 @@ class MainScreen(FloatLayout):
                 #when the timer reaches 0
                 Clock.unschedule(update_callback)
         Clock.schedule_interval(update_callback, 1)
-
-

@@ -1,7 +1,11 @@
 from kivy.app import App
 from kivy.core.window import Window
-from model import initialize_database
+from model import initialize_database, retrieve_user_id, generate_user_id, create_connection
 from main_screen import MainScreen
+import asyncio
+import websockets
+from kivy.clock import Clock
+from threading import Thread
 
 #  ______                        __    __                         __     
 # /\__  _\                      /\ \__/\ \                       /\ \    
@@ -17,16 +21,20 @@ from main_screen import MainScreen
 # ┗┛┗┫  ┗┛┗┛ ┛┗┗┻┛┗•
 #    ┛              
 
+DB_CONNECTION = create_connection()
+
 
 class TogetherApp(App):
-    def build(self):
-        Window.size = (350, 600)
-        initialize_database()
-        return MainScreen()
-    
     def show_character_window(self):
         main_screen = self.root
         main_screen.show_character_window()
+    
+    def build(self):
+        initialize_database()
+        Window.size = (512, 768)
+
+        return MainScreen()
+
 
 if __name__ == '__main__':
     TogetherApp().run()
