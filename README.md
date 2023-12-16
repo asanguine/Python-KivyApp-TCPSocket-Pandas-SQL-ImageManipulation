@@ -7,10 +7,10 @@ TODO:<br />
 ◼ Study time analyse report <br />
 <br /><br />
 ## Timer Set-up <br />
-![Code_Ou6Lfb8wxr](https://github.com/asanguine/Python-Kivy-App/assets/54071079/1fd37ba4-20b2-4660-ab59-d4d2fb555c0e)
+![Code_1GiAf0KIRT](https://github.com/asanguine/Python-Kivy-App/assets/54071079/01c6dbd1-d111-4b00-8694-72876e4cd812)
 <br />
-![firefox_jZ2CKtveha](https://github.com/asanguine/Python-Kivy-App/assets/54071079/c02c41c1-fe96-434b-8af8-7537f380542c)
+![Code_oqTZ8Y6afd](https://github.com/asanguine/Python-Kivy-App/assets/54071079/3a100154-45c7-4b64-8609-8b208c596ff3)
 <br />
 ## Character Creation <br />
-![msrdc_YbbddVrWDl](https://github.com/asanguine/Python-Kivy-App/assets/54071079/5a7ee83f-837c-4d11-b96c-6e2f55076f18)
+![Code_WK7KdizKkJ](https://github.com/asanguine/Python-Kivy-App/assets/54071079/452e7c23-542c-4220-b0f3-9ef0816b9ec3)
 <br /><br />
