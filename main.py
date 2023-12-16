@@ -1,6 +1,6 @@
 from kivy.app import App
 from kivy.core.window import Window
-from model import initialize_database, retrieve_user_id, generate_user_id, create_connection
+from model import initialize_database, retrieve_preset, retrieve_user_id, generate_user_id, create_connection
 from main_screen import MainScreen
 import asyncio
 import websockets
