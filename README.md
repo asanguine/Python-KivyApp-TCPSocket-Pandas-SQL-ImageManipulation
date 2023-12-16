@@ -1,9 +1,5 @@
-# Python-Kivy-App (IN PROGRESS) <br />
+# Python-Kivy-Socket-TCP-Image_manipulation-SQL (IN PROGRESS) <br />
 TODO:<br />
-✔ Character creation<br />
-◼ Multiple User Connection via Websocket<br />
-◼<br />
-◼<br />
 ◼ Study time analyse report <br />
 <br /><br />
 ## Timer Set-up <br />
