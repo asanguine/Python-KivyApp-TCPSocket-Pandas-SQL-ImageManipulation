@@ -1,4 +1,3 @@
-# server.py
 import socket
 import threading
 import json
@@ -13,7 +12,7 @@ server.listen()
 
 clients = []
 user_info_list = []
-user_info_lock = threading.Lock()  # Add a lock to ensure thread safety when modifying user_info_list
+user_info_lock = threading.Lock()
 
 def broadcast(message):
     for client in clients:

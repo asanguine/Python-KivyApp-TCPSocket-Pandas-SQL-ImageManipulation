@@ -2,10 +2,8 @@ from kivy.app import App
 from kivy.core.window import Window
 from model import initialize_database, retrieve_preset, retrieve_user_id, generate_user_id, create_connection
 from main_screen import MainScreen
-import asyncio
-import websockets
-from kivy.clock import Clock
-from threading import Thread
+from client import MyClient
+
 
 #  ______                        __    __                         __     
 # /\__  _\                      /\ \__/\ \                       /\ \    
@@ -30,9 +28,10 @@ class TogetherApp(App):
         main_screen.show_character_window()
     
     def build(self):
+        client = MyClient()
+        client.start()
         initialize_database()
         Window.size = (512, 768)
-
         return MainScreen()
 
 

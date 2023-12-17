@@ -1,57 +1,39 @@
 import socket
 import threading
-from model import retrieve_user_id, retrieve_preset, create_connection
 import json
+from model import retrieve_user_id, retrieve_preset, create_connection
 
+class MyClient:
+    def __init__(self):
+        self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.user_id = None
+        self.preset_data = None
 
+    def connect_to_server(self):
+        self.client.connect(('127.0.0.1', 55555))
+        self.user_id = retrieve_user_id(create_connection())
+        self.preset_data = retrieve_preset(create_connection(), self.user_id)
 
-conn = create_connection()
-user_id = retrieve_user_id(conn)
-preset_data = retrieve_preset(conn, user_id)
-nickname = input("Choose your nickname: ")
+        self.client.send(self.user_id.encode('ascii'))
+        preset_info = {'clothe': self.preset_data['clothe'], 'hair': self.preset_data['hair'], 'expression': self.preset_data['expression']}
+        self.client.send(json.dumps(preset_info).encode('ascii'))
 
-client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.connect(('127.0.0.1', 55555))
+    def receive_messages(self):
+        while True:
+            try:
+                message = self.client.recv(1024).decode('ascii')
+                if message == 'NICK':
+                    self.client.send(self.user_id.encode('ascii'))
+                else:
+                    received_preset = json.loads(message)
+                    print(f"Received preset: {received_preset}")
+            except:
+                print("An error occurred!")
+                self.client.close()
+                break
 
-client.send(user_id.encode('ascii'))
-preset_info = {'clothe': preset_data['clothe'], 'hair': preset_data['hair'], 'expression': preset_data['expression']}
-client.send(json.dumps(preset_info).encode('ascii'))
+    def start(self):
+        self.connect_to_server()
 
-received_preset = None
-
-def receive():
-    global received_preset
-    while True:
-        try:
-            message = client.recv(1024).decode('ascii')
-            if message == 'NICK':
-                client.send(nickname.encode('ascii'))
-            else:
-                # Assuming the message contains the received preset as a JSON string
-                received_preset = json.loads(message)
-                print(f"Received preset: {received_preset}")
-        except:
-            print("An error occurred!")
-            client.close()
-            break
-
-
-
-def write():
-    while True:
-        #message = '{}: {}'.format(nickname, input(''))
-        message = ''
-        client.send(message.encode('ascii'))
-        #pass
-
-
-
-# Start two threads for receiving and writing messages
-receive_thread = threading.Thread(target=receive)
-receive_thread.start()
-
-write_thread = threading.Thread(target=write)
-write_thread.start()
-
-
-
+        receive_thread = threading.Thread(target=self.receive_messages)
+        receive_thread.start()
