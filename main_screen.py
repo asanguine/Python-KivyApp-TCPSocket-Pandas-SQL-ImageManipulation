@@ -6,10 +6,34 @@ from timer_window import TimerWindow
 from img_combine import combine_images, body_parts, images_count
 from kivy.clock import Clock
 
-class MainScreen(FloatLayout):
-    DB_CONNECTION = create_connection()
-    user_id = retrieve_user_id(DB_CONNECTION) or generate_user_id()
+DB_CONNECTION = create_connection()
+user_id = retrieve_user_id(DB_CONNECTION) or generate_user_id()
+# connected_users=[]
 
+# def set_connected_users(users):
+#     global connected_users
+#     connected_users = users
+
+# def fill_user_list(user_data):
+#     connected_users.append(user_data)
+#     print(()()()()()()()()()()()()()()()()()())
+#     for user in connected_users:
+#         print(user)
+
+# def remove_from_user_list(user_data):
+#     connected_users.remove(user_data)
+#     print(()()()()()()()()()()()()()()()()()())
+#     for user in connected_users:
+#         print(user)
+
+from friend import get_connected_users, remove_yourself_from_list, get_friend_preset
+
+connected_users = get_connected_users()
+connected_users = remove_yourself_from_list(connected_users, user_id)
+
+
+class MainScreen(FloatLayout):
+    
     character_window = ObjectProperty(None)
     current_images = retrieve_preset(DB_CONNECTION, user_id) or \
                                     {'clothe': 1, 'hair': 1, 'expression': 1}
@@ -34,7 +58,15 @@ class MainScreen(FloatLayout):
     def get_character_image(self):
         return combine_images(body_parts(self.current_images['clothe'],
                                          self.current_images['hair'],
-                                         self.current_images['expression']))
+                                         self.current_images['expression']),
+                                         'images/character/character.png')
+
+    def get_friend_image_source(self):
+        source = combine_images(body_parts(get_friend_preset(connected_users)['clothe'],
+                                        get_friend_preset(connected_users)['hair'],
+                                        get_friend_preset(connected_users)['expression']),
+                                        'images/character/friend_character.png')
+        return source
 
     def get_character_pos(self):
         x, y = self.ids.character_image_main.pos

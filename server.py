@@ -1,7 +1,8 @@
 import socket
 import threading
 import json
-from model import retrieve_user_id, retrieve_preset, create_connection
+from model import create_connection
+import friend
 
 host = '127.0.0.1'
 port = 55555
@@ -43,6 +44,7 @@ def handle(client):
     
     with user_info_lock:
         user_info_list.append(user_info)
+        friend.set_connected_users(user_info_list)
 
     while True:
         try:
@@ -56,6 +58,7 @@ def handle(client):
 
     with user_info_lock:
         user_info_list.remove(user_info)
+        friend.set_connected_users(user_info_list)
     clients.remove(client)
     client.close()
 
@@ -73,3 +76,10 @@ def get_user_info_list():
         return user_info_list
 
 receive()
+
+
+# if __name__ == '__main__':
+#     # ... (other code)
+
+#     friend.set_connected_users(user_info_list)
+#     friend.print_users(user_info_list)

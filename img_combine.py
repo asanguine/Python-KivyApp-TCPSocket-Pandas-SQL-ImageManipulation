@@ -1,15 +1,16 @@
 from PIL import Image
 import os
 
-def combine_images(image_paths):
+def combine_images(image_paths, final_path):
     images = [Image.open(path) for path in image_paths]
     combined_image = Image.new('RGBA', images[0].size, (0, 0, 0, 0))
 
     for image in images:
         combined_image = Image.alpha_composite(combined_image, image.convert('RGBA'))
 
-    combined_image.save('images/character/character.png', 'PNG')
-    image_path = 'images/character/character.png'
+    combined_image.save(f'{final_path}', 'PNG')
+    #image_path = 'images/character/character.png'
+    image_path = final_path
     return image_path
 
 
