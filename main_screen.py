@@ -41,7 +41,6 @@ class MainScreen(FloatLayout):
         return x, y
 
 
-
     def on_timer_dismiss(self, instance):
         pass
 

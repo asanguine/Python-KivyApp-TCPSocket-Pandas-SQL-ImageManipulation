@@ -12,6 +12,8 @@ server.bind((host, port))
 server.listen()
 
 clients = []
+user_info_list = []
+user_info_lock = threading.Lock()  # Add a lock to ensure thread safety when modifying user_info_list
 
 def broadcast(message):
     for client in clients:
@@ -35,11 +37,13 @@ def get_user_info_from_client(client):
     conn.close()
     return {'user_id': user_id, 'preset_data': preset_data}
 
-
 def handle(client):
     user_info = get_user_info_from_client(client)
     print(f"User {user_info['user_id']} joined. Character Preset: {user_info['preset_data']}")
     broadcast(json.dumps(user_info).encode('ascii'))
+    
+    with user_info_lock:
+        user_info_list.append(user_info)
 
     while True:
         try:
@@ -51,9 +55,10 @@ def handle(client):
             print(f"Error handling client: {e}")
             break
 
+    with user_info_lock:
+        user_info_list.remove(user_info)
     clients.remove(client)
     client.close()
-
 
 def receive():
     while True:
@@ -63,5 +68,9 @@ def receive():
 
         thread = threading.Thread(target=handle, args=(client,))
         thread.start()
+
+def get_user_info_list():
+    with user_info_lock:
+        return user_info_list
 
 receive()
