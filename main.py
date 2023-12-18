@@ -3,7 +3,7 @@ from kivy.core.window import Window
 from model import initialize_database, retrieve_preset, retrieve_user_id, generate_user_id, create_connection
 from main_screen import MainScreen
 from client import MyClient
-
+from state_manager import StateManager
 
 #  ______                        __    __                         __     
 # /\__  _\                      /\ \__/\ \                       /\ \    
@@ -28,7 +28,8 @@ class TogetherApp(App):
         main_screen.show_character_window()
     
     def build(self):
-        client = MyClient()
+        state_manager = StateManager()
+        client = MyClient(state_manager=state_manager)
         client.start()
         initialize_database()
         Window.size = (512, 768)

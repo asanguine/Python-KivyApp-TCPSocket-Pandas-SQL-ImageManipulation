@@ -45,6 +45,7 @@ def handle(client):
     with user_info_lock:
         user_info_list.append(user_info)
         friend.set_connected_users(user_info_list)
+        friend.print_users()
 
     while True:
         try:
@@ -59,6 +60,7 @@ def handle(client):
     with user_info_lock:
         user_info_list.remove(user_info)
         friend.set_connected_users(user_info_list)
+        friend.print_users()
     clients.remove(client)
     client.close()
 

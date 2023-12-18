@@ -45,7 +45,11 @@ class CharacterWindow(ModalView):
 
     def load_next_image(self, body_part):
         image_count = images_count(body_part)
-        self.current_images[body_part] = (self.current_images[body_part] % image_count) + 1
+        if ((self.current_images[body_part] % image_count) + 1) != 1:
+            self.current_images[body_part] = (self.current_images[body_part] % image_count) + 1
+        else:
+            self.current_images[body_part] = (self.current_images[body_part] % image_count) + 2
+            
         self.ids.character_image.source = self.load_image()
         self.ids.character_image.reload()
 

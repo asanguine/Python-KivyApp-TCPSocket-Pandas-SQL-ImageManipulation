@@ -21,6 +21,12 @@ MainScreen:
         source: root.get_friend_image_source()
         size_hint: .7, .7
 
+    Label:
+        id: debug_layer
+        pos_hint: {'right': 1, 'top': 1}
+        text: root.get_debug()
+        background_color: 1,1,1,1
+
 
         
     GridLayout:
