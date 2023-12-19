@@ -13,7 +13,6 @@ def create_connection():
         return conn
     except Error as e:
         print(e)
-
     return conn
 
 
@@ -29,7 +28,6 @@ def create_presets_table(conn):
             );
         ''')
         conn.commit()
-
     except Error as e:
         print(e)
 
@@ -45,6 +43,29 @@ def retrieve_user_id(conn):
         row = cursor.fetchone()
         if row:
             return row[0]
+    except Error as e:
+        print(e)
+
+
+def add_user(conn, user_id, clothe, hair, expression):
+    try:
+        cursor = conn.cursor()
+        cursor.execute('''
+            INSERT INTO connected_users (user_id, clothe, hair, expression)
+            VALUES (?, ?, ?, ?);
+        ''', (user_id, clothe, hair, expression))
+        conn.commit()
+    except Error as e:
+        print(e)
+
+
+def remove_user(conn, user_id):
+    try:
+        cursor = conn.cursor()
+        cursor.execute('''
+            DELETE FROM connected_users WHERE user_id = ?;
+        ''', (user_id,))
+        conn.commit()
     except Error as e:
         print(e)
 

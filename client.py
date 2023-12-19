@@ -1,6 +1,6 @@
 import socket
 import threading
-import json
+import json, time, os
 from model import retrieve_user_id, retrieve_preset, create_connection
 import friend
 
@@ -17,8 +17,14 @@ class MyClient:
         self.preset_data = retrieve_preset(create_connection(), self.user_id)
 
         self.client.send(self.user_id.encode('ascii'))
-        preset_info = {'clothe': self.preset_data['clothe'], 'hair': self.preset_data['hair'], 'expression': self.preset_data['expression']}
-        self.client.send(json.dumps(preset_info).encode('ascii'))
+
+        while True:
+            preset_info = {'user_id': self.user_id,
+                           'clothe': self.preset_data['clothe'],
+                           'hair': self.preset_data['hair'],
+                           'expression': self.preset_data['expression']}
+            self.client.send(json.dumps(preset_info).encode('ascii'))
+            time.sleep(3)
 
     def receive_messages(self):
         while True:
@@ -28,21 +34,21 @@ class MyClient:
                     self.client.send(self.user_id.encode('ascii'))
                 else:
                     received_preset = json.loads(message)
-                    print(f"Received preset: {received_preset}")
-                    print("one minute")
-                    user_info = []
-                    user_info.append(received_preset)
-                    friend.set_connected_users(user_info)
-                    print(f'lets see... {user_info}')
-                    #friend.set_connected_users(self.state_manager.get_connected_users())
-                    print(friend.get_connected_users())
+                    #print(f"Received preset: {received_preset}")
+                    if received_preset['user_id'] != self.user_id:
+                        with open('friend.json', 'w') as friend_file:
+                            json.dump(received_preset, friend_file)
+                            friend_file.write('\n')
+
             except:
-                print("An error occurred!")
+                print("no message received!")
+                os.remove('friend.json')
                 self.client.close()
                 break
 
     def start(self):
-        self.connect_to_server()
+        sending_thread = threading.Thread(target=self.connect_to_server)
+        sending_thread.start()
 
         receive_thread = threading.Thread(target=self.receive_messages)
         receive_thread.start()
