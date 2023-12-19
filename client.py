@@ -29,8 +29,13 @@ class MyClient:
                 else:
                     received_preset = json.loads(message)
                     print(f"Received preset: {received_preset}")
-                    friend.set_connected_users(self.state_manager.get_connected_users())
-                    friend.print_users()
+                    print("one minute")
+                    user_info = []
+                    user_info.append(received_preset)
+                    friend.set_connected_users(user_info)
+                    print(f'lets see... {user_info}')
+                    #friend.set_connected_users(self.state_manager.get_connected_users())
+                    print(friend.get_connected_users())
             except:
                 print("An error occurred!")
                 self.client.close()

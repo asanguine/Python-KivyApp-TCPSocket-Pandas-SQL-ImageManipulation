@@ -8,29 +8,8 @@ from kivy.clock import Clock
 
 DB_CONNECTION = create_connection()
 user_id = retrieve_user_id(DB_CONNECTION) or generate_user_id()
-# connected_users=[]
 
-# def set_connected_users(users):
-#     global connected_users
-#     connected_users = users
-
-# def fill_user_list(user_data):
-#     connected_users.append(user_data)
-#     print(()()()()()()()()()()()()()()()()()())
-#     for user in connected_users:
-#         print(user)
-
-# def remove_from_user_list(user_data):
-#     connected_users.remove(user_data)
-#     print(()()()()()()()()()()()()()()()()()())
-#     for user in connected_users:
-#         print(user)
-
-from friend import get_connected_users, print_users, remove_yourself_from_list, get_friend_preset
-
-connected_users = get_connected_users()
-#connected_users = remove_yourself_from_list(connected_users, user_id)
-
+import friend
 
 class MainScreen(FloatLayout):
     
@@ -42,10 +21,11 @@ class MainScreen(FloatLayout):
         super(MainScreen, self).__init__(**kwargs)
         self.character_window = CharacterWindow()
         Clock.schedule_interval(self.update_friend_image, 5)
-        #Clock.schedule_interval(print_users(connected_users), 5)
+        print("Scheduled update_friend_image every 5 seconds.")
         
-    #def print_connected_users(self):
 
+    def testing(self):
+        print(friend.get_connected_users())
 
     def show_timer_window(self):
         timer_window = TimerWindow()
@@ -68,26 +48,30 @@ class MainScreen(FloatLayout):
 
     def get_friend_image_source(self):
         print("getting friend image source...")
-        source = combine_images(body_parts(get_friend_preset(connected_users)['clothe'],
-                                        get_friend_preset(connected_users)['hair'],
-                                        get_friend_preset(connected_users)['expression']),
+        friend_preset = friend.get_friend_preset()
+        
+        print(f"Friend's preset data: {friend_preset}")
+        source = combine_images(body_parts(friend.get_friend_preset()['clothe'],
+                                        friend.get_friend_preset()['hair'],
+                                        friend.get_friend_preset()['expression']),
                                         'images/character/friend_character.png')
         return source
 
     def update_friend_image(self, *args):
         print("Updating friend's image...")
         friend_image_source = self.get_friend_image_source()
+        print(f"Friend's image source: {friend_image_source}")
         friend_character_image_main = self.ids.friend_character_image_main
         friend_character_image_main.source = friend_image_source
         friend_character_image_main.reload()
-
-    def get_debug(self):
-        return str(get_friend_preset(connected_users))
 
     def get_character_pos(self):
         x, y = self.ids.character_image_main.pos
         return x, y
 
+
+
+################ timer ###
 
     def on_timer_dismiss(self, instance):
         pass

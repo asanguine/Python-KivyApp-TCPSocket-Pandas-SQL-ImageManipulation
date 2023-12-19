@@ -45,7 +45,7 @@ def handle(client):
     with user_info_lock:
         user_info_list.append(user_info)
         friend.set_connected_users(user_info_list)
-        friend.print_users()
+        print(friend.get_connected_users())
 
     while True:
         try:
@@ -60,7 +60,7 @@ def handle(client):
     with user_info_lock:
         user_info_list.remove(user_info)
         friend.set_connected_users(user_info_list)
-        friend.print_users()
+        print(friend.get_connected_users())
     clients.remove(client)
     client.close()
 
@@ -78,10 +78,3 @@ def get_user_info_list():
         return user_info_list
 
 receive()
-
-
-# if __name__ == '__main__':
-#     # ... (other code)
-
-#     friend.set_connected_users(user_info_list)
-#     friend.print_users(user_info_list)

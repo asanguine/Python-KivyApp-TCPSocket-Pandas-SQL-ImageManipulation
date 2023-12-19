@@ -8,7 +8,6 @@ from kivy.uix.behaviors import DragBehavior
 from kivy.core.window import Window
 from kivy.properties import NumericProperty
 from drag_image import DragImage
-#from server import get_user_info_list
 
 class CharacterWindow(ModalView):
     DB_CONNECTION = create_connection()
