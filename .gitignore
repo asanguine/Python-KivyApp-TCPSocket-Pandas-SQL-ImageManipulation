@@ -187,3 +187,4 @@ myvenv/bin/rst2s5.py
 myvenv/bin/rst2xetex.py
 myvenv/bin/rst2xml.py
 myvenv/bin/rstpep2html.py
+character_presets.db
