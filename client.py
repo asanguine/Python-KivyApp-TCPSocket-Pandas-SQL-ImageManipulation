@@ -14,15 +14,20 @@ class MyClient:
     def connect_to_server(self):
         self.client.connect(('127.0.0.1', 55555))
         self.user_id = retrieve_user_id(create_connection())
-        self.preset_data = retrieve_preset(create_connection(), self.user_id)
+        
 
         self.client.send(self.user_id.encode('ascii'))
 
         while True:
+            self.preset_data = retrieve_preset(create_connection(), self.user_id)
+            x = friend.get_character_pos()['x']
+            y = friend.get_character_pos()['y']
+            
             preset_info = {'user_id': self.user_id,
                            'clothe': self.preset_data['clothe'],
                            'hair': self.preset_data['hair'],
-                           'expression': self.preset_data['expression']}
+                           'expression': self.preset_data['expression'],
+                           'position': {'x': x, 'y': y}}
             self.client.send(json.dumps(preset_info).encode('ascii'))
             time.sleep(3)
 
@@ -34,7 +39,6 @@ class MyClient:
                     self.client.send(self.user_id.encode('ascii'))
                 else:
                     received_preset = json.loads(message)
-                    #print(f"Received preset: {received_preset}")
                     if received_preset['user_id'] != self.user_id:
                         with open('friend.json', 'w') as friend_file:
                             json.dump(received_preset, friend_file)
@@ -42,9 +46,10 @@ class MyClient:
 
             except:
                 print("no message received!")
-                os.remove('friend.json')
+                #os.remove('friend.json')
                 self.client.close()
                 break
+            time.sleep(3)
 
     def start(self):
         sending_thread = threading.Thread(target=self.connect_to_server)

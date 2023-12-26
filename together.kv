@@ -20,13 +20,7 @@ MainScreen:
         id: friend_character_image_main
         source: root.get_friend_image_source()
         size_hint: .7, .7
-
-    #Label:
-    #    id: debug_layer
-     #   pos_hint: {'right': 1, 'top': 1}
-      #  text: root.get_debug()
-       # background_color: 1,1,1,1
-
+        pos: root.set_friend_image_pos()
 
         
     GridLayout:
@@ -37,7 +31,6 @@ MainScreen:
             text: "test"
             size_hint: None, None
             size: "40dp", "40dp"
-            on_press: root.testing()
 
         Button:
             text: "3"

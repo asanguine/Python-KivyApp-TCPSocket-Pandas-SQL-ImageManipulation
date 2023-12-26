@@ -5,11 +5,11 @@ from character_window import CharacterWindow
 from timer_window import TimerWindow
 from img_combine import combine_images, body_parts, images_count
 from kivy.clock import Clock
+import friend
 
 DB_CONNECTION = create_connection()
 user_id = retrieve_user_id(DB_CONNECTION) or generate_user_id()
 
-import friend
 
 class MainScreen(FloatLayout):
     
@@ -21,11 +21,8 @@ class MainScreen(FloatLayout):
         super(MainScreen, self).__init__(**kwargs)
         self.character_window = CharacterWindow()
         Clock.schedule_interval(self.update_friend_image, 5)
-        print("Scheduled update_friend_image every 5 seconds.")
-        
-
-    def testing(self):
-        print(friend.get_connected_users())
+        Clock.schedule_interval(self.update_character_pos, 3)
+        Clock.schedule_interval(self.set_friend_image_pos, 3)
 
     def show_timer_window(self):
         timer_window = TimerWindow()
@@ -65,8 +62,19 @@ class MainScreen(FloatLayout):
         friend_character_image_main.source = friend_image_source
         friend_character_image_main.reload()
 
-    def get_character_pos(self):
+
+    def update_character_pos(self, *args):
+        #try:
         x, y = self.ids.character_image_main.pos
+        # except:
+        #     x, y = 0
+        print(f"pos: {x}, {y}")
+        friend.set_character_pos(x, y)
+    
+    def set_friend_image_pos(self, *args):
+        coords = friend.get_friend_picture_pos()
+        x = coords['x']
+        y = coords['y']
         return x, y
 
 
@@ -103,5 +111,5 @@ class MainScreen(FloatLayout):
                 timer_label.text = time_str
             else:
                 #when the timer reaches 0
-                Clock.unschedule(update_callback)
+                Clock.unschedule(update_callback) #also call this when cancelling
         Clock.schedule_interval(update_callback, 1)

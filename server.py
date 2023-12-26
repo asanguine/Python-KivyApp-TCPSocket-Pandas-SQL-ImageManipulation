@@ -19,6 +19,7 @@ def broadcast(message):
     for client in clients:
         client.send(message)
 
+
 def get_user_info_from_client(client):
     user_id = client.recv(1024).decode('ascii')
     print(f"Received user ID: {user_id}")
@@ -31,11 +32,14 @@ def get_user_info_from_client(client):
     preset_data_str = client.recv(1024).decode('ascii')
     try:
         preset_data = json.loads(preset_data_str)
+        position = preset_data.get('position', {'x': 0, 'y': 0})
     except json.JSONDecodeError:
         preset_data = None
+        position = {'x': 0, 'y': 0}
 
     conn.close()
-    return {'user_id': user_id, 'preset_data': preset_data}
+    return {'user_id': user_id, 'preset_data': preset_data, 'position': position}
+
 
 def handle(client):
     user_info = get_user_info_from_client(client)
@@ -52,7 +56,13 @@ def handle(client):
             message = client.recv(1024)
             if not message:
                 break
+            received_data = json.loads(message)
+            position = received_data.get('position', {'x': 0, 'y': 0})
+            friend.set_friend_picture_pos(position['x'], position['y'])
+            #received_data['position'] = friend.get_friend_picture_pos()
             broadcast(message)
+            #broadcast(json.dumps(received_data).encode('ascii'))
+
         except Exception as e:
             print(f"Error handling client: {e}")
             break

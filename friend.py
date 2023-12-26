@@ -19,6 +19,20 @@ def get_connected_users():
     print("get_connected_users() called...")
     return state_manager.get_connected_users()
 
+def set_character_pos(x, y):
+    print("set_character_pos() called...")
+    return state_manager.set_character_pos(x, y)
+
+def get_character_pos():
+    print("get_character_pos() called...")
+    return state_manager.get_character_pos()
+
+def set_friend_picture_pos(x, y):
+    return state_manager.set_friend_picture_pos(x, y)
+    
+def get_friend_picture_pos():
+    return state_manager.get_friend_picture_pos()
+
 #################
 
 
