@@ -47,7 +47,8 @@ def handle(client):
 
         user_info = {'user_id': user_id, 'preset_data': preset_data, 'position': position}
 
-        broadcast(json.dumps(user_info).encode('ascii'))
+        print(f"\n\nReceived message: {user_info['user_id']}\n\n")
+        broadcast(json.dumps(user_info).encode('ascii'), exclude_client=client)
 
         with user_info_lock:
             user_info_list.append(user_info)
@@ -64,7 +65,7 @@ def handle(client):
                 received_data = json.loads(message)
                 position = received_data.get('position', {'x': 0, 'y': 0})
                 friend.set_friend_picture_pos(position['x'], position['y'])
-                broadcast(message)
+                broadcast(message, exclude_client=client)
 
             except Exception as e:
                 print(f"Error handling client: {e}")

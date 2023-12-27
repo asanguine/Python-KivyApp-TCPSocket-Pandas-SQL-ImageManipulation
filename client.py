@@ -43,11 +43,14 @@ class MyClient:
                            'position': {'x': x, 'y': y}}
 
             self.client.send(json.dumps(preset_info).encode('ascii'))
+            print(f'\n\n sending data from {self.user_id}\n\n')
         except Exception as e:
             print(f"Error sending user data: {e}")
 
     def receive_messages(self):
+        print("\n\nReceive messages function started.\n\n")
         while self.connected:
+            print("\n\n trying to receive now\n\n")
             try:
                 message = self.client.recv(1024).decode('ascii')
                 if message == 'NICK':
@@ -55,9 +58,9 @@ class MyClient:
                 else:
                     received_preset = json.loads(message)
                     if received_preset['user_id'] != self.user_id:
-                        with open('friend.json', 'w') as friend_file:
-                            json.dump(received_preset, friend_file)
-                            friend_file.write('\n')
+                        friend.receive_friend_preset(received_preset)
+                        print("()()()()()()()()()")
+                        print(f"\n\nreceiving from {received_preset['user_id']}\n\n")
 
             except Exception as e:
                 print(f"Error receiving messages: {e}")
