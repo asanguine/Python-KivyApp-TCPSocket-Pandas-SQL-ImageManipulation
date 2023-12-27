@@ -36,20 +36,47 @@ def get_friend_picture_pos():
 #################
 
 
-def get_friend_preset():
-    print("\nget_friend_preset() called ...")
-    try:
-        with open(file_path, 'r') as friend_file:
-            data = json.load(friend_file)
-            user_id = data.get('user_id', '')
-            clothe = data.get('clothe', 1)
-            hair = data.get('hair', 1)
-            expression = data.get('expression', 1)
+# def get_friend_preset():
+#     print("\nget_friend_preset() called ...")
+#     try:
+#         with open(file_path, 'r') as friend_file:
+#             data = json.load(friend_file)
+#             user_id = data.get('user_id', '')
+#             clothe = data.get('clothe', 1)
+#             hair = data.get('hair', 1)
+#             expression = data.get('expression', 1)
 
-            if user_id:
-                return {'clothe': clothe, 'hair': hair, 'expression': expression}
-            else:
-                print("Invalid user_id in the friend.json file.")
+#             if user_id:
+#                 return {'clothe': clothe, 'hair': hair, 'expression': expression}
+#             else:
+#                 print("Invalid user_id in the friend.json file.")
+#     except:
+#         print('\n no friend found...')
+#         return {'clothe': 1, 'hair': 1, 'expression': 1}
+
+def set_friend_preset(preset):
+    return state_manager.set_friend_preset(preset)
+
+def get_friend_preset():
+    return state_manager.get_friend_preset()
+
+
+def receive_friend_preset(received_preset):
+    user_id = received_preset['user_id']
+    clothe = received_preset['clothe'],
+    hair = received_preset['hair'],
+    expression = received_preset['expression'],
+    position = received_preset['position']
+    try:
+        if user_id:
+            #set_friend_picture_pos(position['x'], position['y'])
+            preset = {'clothe': clothe, 'hair': hair, 'expression': expression}
+            set_friend_preset(preset)
+            #return {'clothe': clothe, 'hair': hair, 'expression': expression}
+        else:
+            print("Invalid user_id in the friend.json file.")
     except:
         print('\n no friend found...')
         return {'clothe': 1, 'hair': 1, 'expression': 1}
+
+

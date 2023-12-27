@@ -15,64 +15,78 @@ clients = []
 user_info_list = []
 user_info_lock = threading.Lock()
 
-def broadcast(message):
+def broadcast(message, exclude_client=None):
     for client in clients:
-        client.send(message)
+        if client != exclude_client:
+            try:
+                client.send(message)
+            except Exception as e:
+                print(f"Error broadcasting to client: {e}")
+                remove_client(client)
 
-
-def get_user_info_from_client(client):
-    user_id = client.recv(1024).decode('ascii')
-    print(f"Received user ID: {user_id}")
-
-    existing_conn = create_connection()
-    if existing_conn:
-        existing_conn.close()
-
-    conn = create_connection()
-    preset_data_str = client.recv(1024).decode('ascii')
-    try:
-        preset_data = json.loads(preset_data_str)
-        position = preset_data.get('position', {'x': 0, 'y': 0})
-    except json.JSONDecodeError:
-        preset_data = None
-        position = {'x': 0, 'y': 0}
-
-    conn.close()
-    return {'user_id': user_id, 'preset_data': preset_data, 'position': position}
+def remove_client(client):
+    if client in clients:
+        clients.remove(client)
+        print("\n\n---- someone is gone ---")
+        client.close()
+        update_user_info_list()
 
 
 def handle(client):
-    user_info = get_user_info_from_client(client)
-    print(f"User {user_info['user_id']} joined. Character Preset: {user_info['preset_data']}")
-    broadcast(json.dumps(user_info).encode('ascii'))
-    
-    with user_info_lock:
-        user_info_list.append(user_info)
-        friend.set_connected_users(user_info_list)
-        print(friend.get_connected_users())
+    try:
+        user_id = client.recv(1024).decode('ascii')
+        print(f"Received user ID: {user_id}")
 
-    while True:
+        preset_data_str = client.recv(1024).decode('ascii')
         try:
-            message = client.recv(1024)
-            if not message:
+            preset_data = json.loads(preset_data_str)
+            position = preset_data.get('position', {'x': 0, 'y': 0})
+        except json.JSONDecodeError:
+            preset_data = None
+            position = {'x': 0, 'y': 0}
+
+        user_info = {'user_id': user_id, 'preset_data': preset_data, 'position': position}
+
+        broadcast(json.dumps(user_info).encode('ascii'))
+
+        with user_info_lock:
+            user_info_list.append(user_info)
+            friend.set_connected_users(user_info_list)
+            print("\n\n---- someone has joined ---")
+            print(friend.get_connected_users())
+            print("-------\n\n")
+
+        while True:
+            try:
+                message = client.recv(1024)
+                if not message:
+                    break
+                received_data = json.loads(message)
+                position = received_data.get('position', {'x': 0, 'y': 0})
+                friend.set_friend_picture_pos(position['x'], position['y'])
+                broadcast(message)
+
+            except Exception as e:
+                print(f"Error handling client: {e}")
                 break
-            received_data = json.loads(message)
-            position = received_data.get('position', {'x': 0, 'y': 0})
-            friend.set_friend_picture_pos(position['x'], position['y'])
-            #received_data['position'] = friend.get_friend_picture_pos()
-            broadcast(message)
-            #broadcast(json.dumps(received_data).encode('ascii'))
 
-        except Exception as e:
-            print(f"Error handling client: {e}")
-            break
+        with user_info_lock:
+            user_info_list.remove(user_info)
+            friend.set_connected_users(user_info_list)
+            print("\n\n---- someone is gone ---")
+            print(friend.get_connected_users())
+            print("-------\n\n")
+        clients.remove(client)
+        client.close()
 
+    except Exception as e:
+        print(f"Error handling client: {e}")
+
+
+def update_user_info_list():
     with user_info_lock:
-        user_info_list.remove(user_info)
         friend.set_connected_users(user_info_list)
-        print(friend.get_connected_users())
-    clients.remove(client)
-    client.close()
+
 
 def receive():
     while True:

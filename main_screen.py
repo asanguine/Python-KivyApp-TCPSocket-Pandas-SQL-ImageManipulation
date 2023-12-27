@@ -22,7 +22,7 @@ class MainScreen(FloatLayout):
         self.character_window = CharacterWindow()
         Clock.schedule_interval(self.update_friend_image, 5)
         Clock.schedule_interval(self.update_character_pos, 3)
-        Clock.schedule_interval(self.set_friend_image_pos, 3)
+        Clock.schedule_interval(self.return_friend_coordinates, 3)
 
     def show_timer_window(self):
         timer_window = TimerWindow()
@@ -71,7 +71,7 @@ class MainScreen(FloatLayout):
         print(f"pos: {x}, {y}")
         friend.set_character_pos(x, y)
     
-    def set_friend_image_pos(self, *args):
+    def return_friend_coordinates(self, *args):
         coords = friend.get_friend_picture_pos()
         x = coords['x']
         y = coords['y']
