@@ -48,7 +48,10 @@ class MyClient:
             print(f"Error sending user data: {e}")
 
     def receive_messages(self):
+        print(f'\n\n status: {self.connected}\n\n')
         print("\n\nReceive messages function started.\n\n")
+        self.connected = True
+        print(f'\n\n status: {self.connected}\n\n')
         while self.connected:
             print("\n\n trying to receive now\n\n")
             try:
@@ -67,9 +70,10 @@ class MyClient:
                 self.client.close()
                 self.connected = False
                 break
-            time.sleep(3)
+            #time.sleep(3)
 
     def start(self):
+        print("\n()()()()()()\nStarting threads...\n)()()()()()\n")
         sending_thread = threading.Thread(target=self.connect_to_server)
         sending_thread.start()
 

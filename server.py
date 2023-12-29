@@ -1,7 +1,6 @@
 import socket
 import threading
 import json
-from model import create_connection
 import friend
 
 host = '127.0.0.1'
@@ -20,6 +19,8 @@ def broadcast(message, exclude_client=None):
         if client != exclude_client:
             try:
                 client.send(message)
+                #print(f"\n() Broadcasting message to {client}a")
+                print(f"\n Broadcasted message is: {message}   ()\n")
             except Exception as e:
                 print(f"Error broadcasting to client: {e}")
                 remove_client(client)
@@ -35,9 +36,10 @@ def remove_client(client):
 def handle(client):
     try:
         user_id = client.recv(1024).decode('ascii')
-        print(f"Received user ID: {user_id}")
+        print(f"user joined: {user_id}")
 
         preset_data_str = client.recv(1024).decode('ascii')
+        print(f"\n*********n\info of joined user:\n{preset_data_str}\n***********\n")
         try:
             preset_data = json.loads(preset_data_str)
             position = preset_data.get('position', {'x': 0, 'y': 0})
@@ -47,14 +49,14 @@ def handle(client):
 
         user_info = {'user_id': user_id, 'preset_data': preset_data, 'position': position}
 
-        print(f"\n\nReceived message: {user_info['user_id']}\n\n")
+        print(f"\nReceived message from: {user_info['user_id']}\n")
         broadcast(json.dumps(user_info).encode('ascii'), exclude_client=client)
 
         with user_info_lock:
             user_info_list.append(user_info)
             friend.set_connected_users(user_info_list)
             print("\n\n---- someone has joined ---")
-            print(friend.get_connected_users())
+            print(len(friend.get_connected_users()))
             print("-------\n\n")
 
         while True:
@@ -65,6 +67,10 @@ def handle(client):
                 received_data = json.loads(message)
                 position = received_data.get('position', {'x': 0, 'y': 0})
                 friend.set_friend_picture_pos(position['x'], position['y'])
+                print(f"\n\nReceived data: {received_data}\n")#################
+                print("\n\n---- connected users: ---")
+                print(len(friend.get_connected_users()))
+                print("-------\n\n")
                 broadcast(message, exclude_client=client)
 
             except Exception as e:
@@ -75,7 +81,7 @@ def handle(client):
             user_info_list.remove(user_info)
             friend.set_connected_users(user_info_list)
             print("\n\n---- someone is gone ---")
-            print(friend.get_connected_users())
+            print(len(friend.get_connected_users()))
             print("-------\n\n")
         clients.remove(client)
         client.close()

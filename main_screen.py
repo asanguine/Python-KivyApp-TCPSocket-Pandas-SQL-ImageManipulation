@@ -1,9 +1,9 @@
 from kivy.uix.floatlayout import FloatLayout
-from model import create_connection, update_preset, retrieve_user_id, retrieve_preset, generate_user_id, create_presets_table
+from model import create_connection, retrieve_user_id, retrieve_preset, generate_user_id
 from kivy.properties import ObjectProperty
 from character_window import CharacterWindow
 from timer_window import TimerWindow
-from img_combine import combine_images, body_parts, images_count
+from img_combine import combine_images, body_parts
 from kivy.clock import Clock
 import friend
 
@@ -44,7 +44,7 @@ class MainScreen(FloatLayout):
                                          'images/character/character.png')
 
     def get_friend_image_source(self):
-        print("getting friend image source...")
+        #print("getting friend image source...")
         friend_preset = friend.get_friend_preset()
         
         print(f"Friend's preset data: {friend_preset}")
@@ -57,7 +57,7 @@ class MainScreen(FloatLayout):
     def update_friend_image(self, *args):
         print("Updating friend's image...")
         friend_image_source = self.get_friend_image_source()
-        print(f"Friend's image source: {friend_image_source}")
+        #print(f"Friend's image source: {friend_image_source}")
         friend_character_image_main = self.ids.friend_character_image_main
         friend_character_image_main.source = friend_image_source
         friend_character_image_main.reload()
@@ -111,5 +111,5 @@ class MainScreen(FloatLayout):
                 timer_label.text = time_str
             else:
                 #when the timer reaches 0
-                Clock.unschedule(update_callback) #also call this when cancelling
+                Clock.unschedule(update_callback) #also call this when cancelling :todo
         Clock.schedule_interval(update_callback, 1)
