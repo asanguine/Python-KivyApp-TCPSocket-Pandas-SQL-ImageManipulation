@@ -20,9 +20,10 @@ class MainScreen(FloatLayout):
     def __init__(self, **kwargs):
         super(MainScreen, self).__init__(**kwargs)
         self.character_window = CharacterWindow()
-        Clock.schedule_interval(self.update_friend_image, 5)
-        Clock.schedule_interval(self.update_character_pos, 3)
-        Clock.schedule_interval(self.return_friend_coordinates, 3)
+        Clock.schedule_interval(self.update_friend_image, 1)
+        Clock.schedule_interval(self.update_character_pos, 1)
+        Clock.schedule_interval(self.return_friend_coordinates, 1)
+        Clock.schedule_interval(self.return_friend_size, 1)
 
     def show_timer_window(self):
         timer_window = TimerWindow()
@@ -60,23 +61,31 @@ class MainScreen(FloatLayout):
         #print(f"Friend's image source: {friend_image_source}")
         friend_character_image_main = self.ids.friend_character_image_main
         friend_character_image_main.source = friend_image_source
+        friend_character_image_main.pos = self.return_friend_coordinates()
         friend_character_image_main.reload()
 
 
     def update_character_pos(self, *args):
         #try:
         x, y = self.ids.character_image_main.pos
+        size = self.ids.character_image_main.size_hint
         # except:
         #     x, y = 0
         print(f"pos: {x}, {y}")
-        friend.set_character_pos(x, y)
+        friend.set_character_pos(x, y, size[1])
     
     def return_friend_coordinates(self, *args):
         coords = friend.get_friend_picture_pos()
+        print(f'\n\n()()coords\n {coords}\n\n=============\n===============')
         x = coords['x']
         y = coords['y']
         return x, y
 
+    def return_friend_size(self, *args):
+        size = friend.get_friend_picture_pos()
+        print(f'\n\n()()coords\n {size}\n\n=============\n===============')
+        s = size['size']
+        return s
 
 
 ################ timer ###

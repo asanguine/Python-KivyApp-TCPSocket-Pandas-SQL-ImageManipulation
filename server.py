@@ -42,10 +42,10 @@ def handle(client):
         print(f"\n*********n\info of joined user:\n{preset_data_str}\n***********\n")
         try:
             preset_data = json.loads(preset_data_str)
-            position = preset_data.get('position', {'x': 0, 'y': 0})
+            position = preset_data.get('position', {'x': 0, 'y': 0, 'size': 0.7})
         except json.JSONDecodeError:
             preset_data = None
-            position = {'x': 0, 'y': 0}
+            position = {'x': 0, 'y': 0, 'size': 0.7}
 
         user_info = {'user_id': user_id, 'preset_data': preset_data, 'position': position}
 
@@ -65,8 +65,8 @@ def handle(client):
                 if not message:
                     break
                 received_data = json.loads(message)
-                position = received_data.get('position', {'x': 0, 'y': 0})
-                friend.set_friend_picture_pos(position['x'], position['y'])
+                position = received_data.get('position', {'x': 0, 'y': 0, 'size': 0.7})
+                friend.set_friend_picture_pos(position['x'], position['y'], position['size'])
                 print(f"\n\nReceived data: {received_data}\n")#################
                 print("\n\n---- connected users: ---")
                 print(len(friend.get_connected_users()))
@@ -76,6 +76,10 @@ def handle(client):
             except Exception as e:
                 print(f"Error handling client: {e}")
                 break
+
+        disconnect_message = {'disconnect': True}
+        broadcast(json.dumps(disconnect_message).encode('ascii'), exclude_client=client)
+
 
         with user_info_lock:
             user_info_list.remove(user_info)

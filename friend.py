@@ -18,16 +18,16 @@ def get_connected_users():
     #print("get_connected_users() called...")
     return state_manager.get_connected_users()
 
-def set_character_pos(x, y):
+def set_character_pos(x, y, size):
     #print("set_character_pos() called...")
-    return state_manager.set_character_pos(x, y)
+    return state_manager.set_character_pos(x, y, size)
 
 def get_character_pos():
     #print("get_character_pos() called...")
     return state_manager.get_character_pos()
 
-def set_friend_picture_pos(x, y):
-    return state_manager.set_friend_picture_pos(x, y)
+def set_friend_picture_pos(x, y, size):
+    return state_manager.set_friend_picture_pos(x, y, size)
     
 def get_friend_picture_pos():
     return state_manager.get_friend_picture_pos()
@@ -53,7 +53,7 @@ def receive_friend_preset(received_preset):
         position = received_preset['position']
     try:
         if user_id:
-            set_friend_picture_pos(position['x'], position['y'])
+            set_friend_picture_pos(position['x'], position['y'], position['size'])
             preset = {'clothe': clothe, 'hair': hair, 'expression': expression}
             set_friend_preset(preset)
             #return {'clothe': clothe, 'hair': hair, 'expression': expression}
