@@ -28,7 +28,7 @@ class MyClient:
 
         while self.connected:
             self.send_user_data()
-            time.sleep(1)
+            time.sleep(3)
 
     def send_user_data(self):
         try:
@@ -44,17 +44,17 @@ class MyClient:
                            'position': {'x': x, 'y': y, 'size': size}}
 
             self.client.send(json.dumps(preset_info).encode('ascii'))
-            print(f'\n\n sending data from {self.user_id}\n\n')
+            #print(f'\n\n sending data from {self.user_id}\n\n')
         except Exception as e:
             print(f"Error sending user data: {e}")
 
     def receive_messages(self):
-        print(f'\n\n status: {self.connected}\n\n')
-        print("\n\nReceive messages function started.\n\n")
+        #print(f'\n\n status: {self.connected}\n\n')
+        #print("\n\nReceive messages function started.\n\n")
         self.connected = True
-        print(f'\n\n status: {self.connected}\n\n')
+        #print(f'\n\n status: {self.connected}\n\n')
         while self.connected:
-            print("\n\n trying to receive now\n\n")
+            #print("\n\n trying to receive now\n\n")
             try:
                 message = self.client.recv(1024).decode('ascii')
                 if message == 'NICK':
@@ -63,23 +63,21 @@ class MyClient:
                     received_preset = json.loads(message)
                     if received_preset.get('disconnect'):
                         friend.set_friend_preset({'clothe': 1, 'hair': 1, 'expression': 1})
-                        print("User disconnected. Resetting friend's preset.")
+                        #print("User disconnected. Resetting friend's preset.")
                     else:
                         received_preset = received_preset
                         if received_preset['user_id'] != self.user_id:
                             friend.receive_friend_preset(received_preset)
-                            print("()()()()()()()()()")
-                            print(f"\n\nreceiving from {received_preset['user_id']}\n\n")
+                            #print(f"\n\nreceiving from {received_preset['user_id']}\n\n")
 
             except Exception as e:
-                print(f"Error receiving messages: {e}")
+                #print(f"Error receiving messages: {e}")
                 self.client.close()
                 self.connected = False
                 break
             #time.sleep(3)
 
     def start(self):
-        print("\n()()()()()()\nStarting threads...\n)()()()()()\n")
         sending_thread = threading.Thread(target=self.connect_to_server)
         sending_thread.start()
 

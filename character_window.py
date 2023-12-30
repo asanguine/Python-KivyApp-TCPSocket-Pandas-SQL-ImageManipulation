@@ -59,4 +59,3 @@ class CharacterWindow(ModalView):
 
         app = App.get_running_app()
         app.root.update_character_image(image_path)
-

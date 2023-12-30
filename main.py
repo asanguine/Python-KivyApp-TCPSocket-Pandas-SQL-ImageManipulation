@@ -1,9 +1,10 @@
 from kivy.app import App
 from kivy.core.window import Window
-from model import initialize_database, retrieve_preset, retrieve_user_id, generate_user_id, create_connection
+from model import initialize_database, create_connection
 from main_screen import MainScreen
 from client import MyClient
 from state_manager import StateManager
+import logging
 
 #  ______                        __    __                         __     
 # /\__  _\                      /\ \__/\ \                       /\ \    
@@ -18,7 +19,8 @@ from state_manager import StateManager
 # ┣┓┓┏  ┣┓┓┏┓┃┏┏┓┏┓ 
 # ┗┛┗┫  ┗┛┗┛ ┛┗┗┻┛┗•
 #    ┛              
-
+logging.getLogger('kivy').setLevel(logging.WARNING)
+logging.getLogger('PIL').setLevel(logging.WARNING)
 DB_CONNECTION = create_connection()
 
 

@@ -31,12 +31,13 @@ MainScreen:
         pos_hint: {'right': 1, 'top': 1}
 
         Button:
-            text: "test"
+            text: "chat"
+            #on_press: root.show_character_window()
             size_hint: None, None
             size: "40dp", "40dp"
 
         Button:
-            text: "3"
+            text: "stats"
             size_hint: None, None
             size: "40dp", "40dp"
 
@@ -65,6 +66,26 @@ MainScreen:
         size: "150dp", "30dp"
         pos_hint: {'center_x': 0.5, 'center_y': 0.8}
 
+    BoxLayout:
+        id: pause_buttons
+        orientation: 'horizontal'
+        size_hint: 0.1, 0.1
+        pos_hint: {'center_x': 0.5, 'center_y': 0.8}
+        opacity: 0
+
+        Button:
+            id: pause_continue_button
+            text: '||'
+            size_hint: 0.1, 0.1
+            on_release: root.pause_continue_timer()
+
+        Button:
+            id: cancel_button
+            text: '[]'
+            size_hint: 0.1, 0.1
+            on_release: root.cancel_timer()
+
+
 
 
 <TimerWindow>:
@@ -86,7 +107,7 @@ MainScreen:
 
         Slider:
             id: duration_slider
-            min: 5
+            min: 0.1 #############################################                        ### dont forget here
             max: 180
             step: 5
 
@@ -99,11 +120,32 @@ MainScreen:
                 on_release: root.start_timer(duration_slider.value); root.dismiss()
 
             Button:
-                #background_normal: 'images/icons/cancel.png'
                 text: 'X'
                 size_hint: 0.5, 1
                 on_release: root.dismiss()
 
+
+<CongratsWindow>:
+    id: congrats_window
+    size_hint: 0.6, 0.3
+    background_color: [0, 0, 0, 0]
+    anchor_x: "center"
+    anchor_y: "bottom"
+
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint: 0.8, 0.8
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+        Label:
+            text: "Congratulations!"
+            size_hint_y: None
+            height: 30
+
+        Button:
+            text: 'OK'
+            size_hint: 0.5, 1
+            on_release: root.dismiss()
 
 
 
