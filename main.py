@@ -4,7 +4,7 @@ from model import initialize_database, create_connection
 from main_screen import MainScreen
 from client import MyClient
 from state_manager import StateManager
-import logging
+import logging, os
 from kivy.clock import Clock
 
 #  ______                        __    __                         __     
@@ -39,6 +39,10 @@ class TogetherApp(App):
         new_height = min(Window.height, Window.width / aspect_ratio)
         Window.size = (new_width, new_height)
 
+    def __init__(self, **kwargs):
+        super(TogetherApp, self).__init__(**kwargs)
+        self.client = None
+
     def build(self):
         state_manager = StateManager()
         client = MyClient(state_manager=state_manager)
@@ -48,7 +52,11 @@ class TogetherApp(App):
         Window.bind(on_resize=self.on_window_resize)
         Clock.schedule_interval(self.update_aspect_ratio, 1 / 60.0)
         return MainScreen()
-
+    
+    def on_stop(self):
+        if self.client:
+            self.client.stop()
+        os._exit(0)
 
 if __name__ == '__main__':
     TogetherApp().run()
