@@ -1,5 +1,5 @@
 from kivy.uix.floatlayout import FloatLayout
-from model import create_connection, retrieve_user_id, retrieve_preset, generate_user_id
+from model import create_connection, retrieve_user_id, retrieve_preset, generate_user_id, add_study_session
 from kivy.properties import ObjectProperty
 from character_window import CharacterWindow
 from timer_window import TimerWindow
@@ -7,6 +7,7 @@ from img_combine import combine_images, body_parts
 from kivy.clock import Clock
 import friend
 from congrats_window import CongratsWindow
+from stats_window import StatsWindow
 
 DB_CONNECTION = create_connection()
 user_id = retrieve_user_id(DB_CONNECTION) or generate_user_id()
@@ -36,6 +37,12 @@ class MainScreen(FloatLayout):
     def show_character_window(self):
         character_window = CharacterWindow()
         character_window.open()
+
+    def show_stats_window(self):
+        stats_window = StatsWindow()
+        stats_window.create_barplot()
+        stats_window.update_stats_image()
+        stats_window.open()
 
     def update_character_image(self, image_path):
         character_image_main = self.ids.character_image_main
@@ -103,11 +110,15 @@ class MainScreen(FloatLayout):
             self.ids.pause_buttons.opacity = 0
             return 0
 
-    def on_timer_dismiss(self, instance):
+    def on_timer_dismiss(self, instance, duration):
         self.timer_active = False
         congrats_window = CongratsWindow()
         congrats_window.open()
+        self.add_study_session_to_db(duration)
 
+    def add_study_session_to_db(self, dur):
+        duration = dur
+        add_study_session(DB_CONNECTION, user_id, duration)
 
     def update_timer(self, instance, value):
         hours, remainder = divmod(value * 60, 3600)
@@ -138,7 +149,7 @@ class MainScreen(FloatLayout):
                 #when the timer reaches 0
                 Clock.unschedule(update_callback) #also call this when cancelling :todo
                 self.ids.timer_label.text = ''
-                self.on_timer_dismiss(None)
+                self.on_timer_dismiss(None, duration)
                 print(f"Timer: ")
                 print(self.get_timer_active())       
         #Clock.schedule_interval(update_callback, 1)   ###########  TODO: pause feature

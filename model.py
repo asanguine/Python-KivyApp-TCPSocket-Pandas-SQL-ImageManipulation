@@ -2,6 +2,7 @@ import sqlite3
 from sqlite3 import Error
 import os
 import uuid
+from datetime import datetime
 
 DB_FILE = "character_presets.db"
 
@@ -30,7 +31,6 @@ def create_presets_table(conn):
         conn.commit()
     except Error as e:
         print(e)
-
 
 def generate_user_id():
     return str(uuid.uuid4())
@@ -97,10 +97,73 @@ def retrieve_preset(conn, user_id):
         print(e)
 
 
+####  STUDY SESSION STATS ()()()()()()()
+
+def create_study_sessions_table(conn):
+    try:
+        cursor = conn.cursor()
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS study_sessions (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id TEXT,
+                date TEXT,
+                duration INTEGER,
+                FOREIGN KEY (user_id) REFERENCES character_presets (user_id)
+            );
+        ''')
+        conn.commit()
+    except Error as e:
+        print(e)
+
+
+def get_study_data(conn, user_id):
+    try:
+        cursor = conn.cursor()
+        cursor.execute('''
+            SELECT date, duration
+            FROM study_sessions
+            WHERE user_id = ?;
+        ''', (user_id,))
+        rows = cursor.fetchall()
+        return rows
+    except Error as e:
+        print(e)
+
+
+def get_aggregated_study_data(conn, user_id):
+    try:
+        cursor = conn.cursor()
+        cursor.execute('''
+            SELECT date, SUM(duration) as total_duration
+            FROM study_sessions
+            WHERE user_id = ?
+            GROUP BY date;
+        ''', (user_id,))
+        rows = cursor.fetchall()
+        return {(row[0], row[1]) for row in rows}
+    except Error as e:
+        print(e)
+
+
+def add_study_session(conn, user_id, duration):
+    try:
+        cursor = conn.cursor()
+        date_today = datetime.now().strftime("%Y-%m-%d")
+        cursor.execute('''
+            INSERT INTO study_sessions (user_id, date, duration)
+            VALUES (?, ?, ?);
+        ''', (user_id, date_today, duration))
+        conn.commit()
+    except Error as e:
+        print(e)
+
+############
+
 def initialize_database():
     conn = create_connection()
     if conn:
         create_presets_table(conn)
+        create_study_sessions_table(conn)
         cursor = conn.cursor()
         cursor.execute("SELECT COUNT(*) FROM character_presets")
         count = cursor.fetchone()[0]
@@ -112,5 +175,6 @@ def initialize_database():
             ''', (user_id,))
             conn.commit()
         conn.close()
+
 
 initialize_database()

@@ -1,3 +1,4 @@
 kivy
 Pillow
 websockets
+matplotlib

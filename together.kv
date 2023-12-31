@@ -32,12 +32,13 @@ MainScreen:
 
         Button:
             text: "chat"
-            #on_press: root.show_character_window()
+            #on_press: root.show_chat_window()
             size_hint: None, None
             size: "40dp", "40dp"
 
         Button:
             text: "stats"
+            on_press: root.show_stats_window()
             size_hint: None, None
             size: "40dp", "40dp"
 
@@ -107,7 +108,7 @@ MainScreen:
 
         Slider:
             id: duration_slider
-            min: 0.1 #############################################                        ### dont forget here
+            min: 0.1 ############### change  back to 5
             max: 180
             step: 5
 
@@ -185,3 +186,26 @@ MainScreen:
     size: 80, 80
     allow_stretch: True
     keep_ratio: True
+
+
+<StatsWindow>:
+    id: stats_window
+    background_color: [0, 0, 0, 0]
+    anchor_x: "center"
+    anchor_y: "bottom"
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        AsyncImage:
+            id: stats_image
+            source: 'study_sessions_plot.png'
+            size_hint_x: 1
+            size_hint_y: 1
+
+        Button:
+            pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+            size_hint_x: 0.2
+            size_hint_y: 0.1
+            text: 'great!'
+            on_release: root.dismiss()
