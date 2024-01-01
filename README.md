@@ -14,6 +14,9 @@ future TODO:<br />
 ## Timer Set-up <br />
 ![Code_N5UGZePVHs](https://github.com/asanguine/Python-Kivy-App/assets/54071079/3e3d86ff-ae62-4a7a-8f71-0a7e8fff1951)
 <br />
+![msrdc_KbSPsQZdBr](https://github.com/asanguine/Python-Kivy-App/assets/54071079/bf6f255e-7c8c-43a6-b932-3dd9ebfa199e)
+
+<br />
 ## Study Stats <br />
 ![msrdc_DGuO5P7tDl](https://github.com/asanguine/Python-Kivy-App/assets/54071079/f93428ba-6f84-4249-bc2e-b4ad02364ae3)
 <br />
