@@ -8,7 +8,8 @@ future TODO:<br />
 ![Code_LmUAFc9Fnj](https://github.com/asanguine/Python-Kivy-App/assets/54071079/7d45bc2d-fe26-44c4-b9ad-82d118a59918)
 <br />
 ## Character Creation <br />
-![Code_ZWaOvAcO2Y](https://github.com/asanguine/Python-Kivy-App/assets/54071079/dd7b44df-8125-4a0a-a487-5feba73e2799)
+![9fdSJB5vmt](https://github.com/asanguine/Python-Kivy-App/assets/54071079/7f96022c-100d-45b0-a68b-9143944f4d21)
+
 <br /><br />
 ## Timer Set-up <br />
 ![Code_N5UGZePVHs](https://github.com/asanguine/Python-Kivy-App/assets/54071079/3e3d86ff-ae62-4a7a-8f71-0a7e8fff1951)
