@@ -1,12 +1,30 @@
 # Python-Kivy-Socket-TCP-Image_manipulation-SQL (IN PROGRESS) <br />
-TODO:<br />
-◼ Study time analyse report <br />
+future TODO:<br />
+◼ study session stats comparison with connected user <br />
+◼ adding animations <br />
 <br /><br />
-## Timer Set-up <br />
-![Code_1GiAf0KIRT](https://github.com/asanguine/Python-Kivy-App/assets/54071079/01c6dbd1-d111-4b00-8694-72876e4cd812)
 <br />
-![Code_oqTZ8Y6afd](https://github.com/asanguine/Python-Kivy-App/assets/54071079/3a100154-45c7-4b64-8609-8b208c596ff3)
+![Code_LmUAFc9Fnj](https://github.com/asanguine/Python-Kivy-App/assets/54071079/7d45bc2d-fe26-44c4-b9ad-82d118a59918)
 <br />
 ## Character Creation <br />
-![Code_WK7KdizKkJ](https://github.com/asanguine/Python-Kivy-App/assets/54071079/452e7c23-542c-4220-b0f3-9ef0816b9ec3)
+![Code_ZWaOvAcO2Y](https://github.com/asanguine/Python-Kivy-App/assets/54071079/dd7b44df-8125-4a0a-a487-5feba73e2799)
 <br /><br />
+## Timer Set-up <br />
+![Code_N5UGZePVHs](https://github.com/asanguine/Python-Kivy-App/assets/54071079/3e3d86ff-ae62-4a7a-8f71-0a7e8fff1951)
+<br />
+## Study Stats <br />
+![msrdc_DGuO5P7tDl](https://github.com/asanguine/Python-Kivy-App/assets/54071079/f93428ba-6f84-4249-bc2e-b4ad02364ae3)
+<br />
+<br />
+## Socket connection with another user <br />
+![wsl_3iB7upSaT6](https://github.com/asanguine/Python-Kivy-App/assets/54071079/dcd99973-a4a4-41c0-b4d7-082c288fc59b)
+<br />
+<br />
+## Video example of two users <br />
+
+
+https://github.com/asanguine/Python-Kivy-App/assets/54071079/1789d88f-c22d-463d-b696-6d0c56af649b
+
+
+<br />
+
