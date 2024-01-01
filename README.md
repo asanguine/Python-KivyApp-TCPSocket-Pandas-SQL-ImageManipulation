@@ -2,6 +2,7 @@
 future TODO:<br />
 ◼ study session stats comparison with connected user <br />
 ◼ adding animations <br />
+◼ improve timer features <br />
 <br /><br />
 <br />
 ![Code_LmUAFc9Fnj](https://github.com/asanguine/Python-Kivy-App/assets/54071079/7d45bc2d-fe26-44c4-b9ad-82d118a59918)
