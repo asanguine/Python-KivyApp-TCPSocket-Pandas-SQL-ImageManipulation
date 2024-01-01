@@ -3,6 +3,7 @@ from model import create_connection, update_preset, retrieve_preset, retrieve_us
 import os
 from img_combine import combine_images, body_parts, images_count
 from kivy.app import App
+from drag_image import DragImage
 
 class CharacterWindow(ModalView):
     DB_CONNECTION = create_connection()
