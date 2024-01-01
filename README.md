@@ -10,12 +10,13 @@ future TODO:<br />
 <br />
 ## Character Creation <br />
 
-![9fdSJB5vmt](https://github.com/asanguine/Python-Kivy-App/assets/54071079/7f96022c-100d-45b0-a68b-9143944f4d21)
+![Code_pTOe7XAjDh](https://github.com/asanguine/Python-Kivy-App/assets/54071079/c72171db-43f8-47b5-a64e-2217575a0974)
 
 <br /><br />
 ## Timer Set-up <br />
 
-![Code_N5UGZePVHs](https://github.com/asanguine/Python-Kivy-App/assets/54071079/3e3d86ff-ae62-4a7a-8f71-0a7e8fff1951)
+![firefox_XaBVelXHcg](https://github.com/asanguine/Python-Kivy-App/assets/54071079/ddc321a1-91a6-4274-ad0b-bddc59f6a42c)
+
 <br />
 
 ![msrdc_KbSPsQZdBr](https://github.com/asanguine/Python-Kivy-App/assets/54071079/bf6f255e-7c8c-43a6-b932-3dd9ebfa199e)
@@ -23,6 +24,7 @@ future TODO:<br />
 <br />
 ## Study Stats <br />
 
+![NVIDIA_Share_T30lc4m2e4](https://github.com/asanguine/Python-Kivy-App/assets/54071079/e60ce3ac-ffc1-49fe-9a22-76e36ab52159)
 
 <br />
 <br />
