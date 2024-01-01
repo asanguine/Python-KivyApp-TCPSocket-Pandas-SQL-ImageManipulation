@@ -18,11 +18,11 @@ future TODO:<br />
 
 <br />
 ## Study Stats <br />
-![msrdc_DGuO5P7tDl](https://github.com/asanguine/Python-Kivy-App/assets/54071079/f93428ba-6f84-4249-bc2e-b4ad02364ae3)
+
 <br />
 <br />
 ## Socket connection with another user <br />
-![wsl_3iB7upSaT6](https://github.com/asanguine/Python-Kivy-App/assets/54071079/dcd99973-a4a4-41c0-b4d7-082c288fc59b)
+
 <br />
 <br />
 ## Video example of two users <br />
