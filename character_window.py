@@ -1,13 +1,8 @@
 from kivy.uix.modalview import ModalView
-from model import create_connection, update_preset, retrieve_preset, retrieve_user_id, generate_user_id, create_presets_table
+from model import create_connection, update_preset, retrieve_preset, retrieve_user_id, generate_user_id
 import os
 from img_combine import combine_images, body_parts, images_count
 from kivy.app import App
-from kivy.uix.image import AsyncImage
-from kivy.uix.behaviors import DragBehavior
-from kivy.core.window import Window
-from kivy.properties import NumericProperty
-from drag_image import DragImage
 
 class CharacterWindow(ModalView):
     DB_CONNECTION = create_connection()

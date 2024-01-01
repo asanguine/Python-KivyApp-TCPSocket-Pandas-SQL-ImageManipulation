@@ -84,16 +84,13 @@ class MainScreen(FloatLayout):
     
     def return_friend_coordinates(self, *args):
         coords = friend.get_friend_picture_pos()
-        #print(f'\n\n()()coords\n {coords}\n\n=============\n===============')
         x = coords['x']
         y = coords['y']
         return x, y
 
     def return_friend_size(self, *args):
         size = friend.get_friend_picture_pos()
-        #print(f'\n\n()()coords\n {size}\n\n=============\n===============')
         s = size['size']
-        print(f'()()()\n\n {s}\n\n()()()')
         return s
 
 
