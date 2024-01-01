@@ -22,6 +22,7 @@ from kivy.clock import Clock
 #    ┛              
 logging.getLogger('kivy').setLevel(logging.WARNING)
 logging.getLogger('PIL').setLevel(logging.WARNING)
+logging.getLogger('matplotlib').setLevel(logging.ERROR)
 DB_CONNECTION = create_connection()
 
 
