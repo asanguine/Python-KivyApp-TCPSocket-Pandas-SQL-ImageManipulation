@@ -1,4 +1,4 @@
-# Python-Kivy-Socket-TCP-Pandas-Image_manipulation-SQL (IN PROGRESS) <br />
+# Python-Kivy-Socket-TCP-Pandas-Image_manipulation-SQL <br />
 future TODO:<br />
 ◼ study session stats comparison with connected user <br />
 ◼ adding animations <br />
