@@ -93,6 +93,7 @@ class MainScreen(FloatLayout):
         size = friend.get_friend_picture_pos()
         #print(f'\n\n()()coords\n {size}\n\n=============\n===============')
         s = size['size']
+        print(f'()()()\n\n {s}\n\n()()()')
         return s
 
 
