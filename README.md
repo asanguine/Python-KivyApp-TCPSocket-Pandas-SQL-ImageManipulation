@@ -4,7 +4,11 @@ future TODO:<br />
 ◼ adding animations <br />
 ◼ improve timer features <br />
 <br /><br />
-<br />
+## To run:
+`source myvenv/bin/activate` <br />
+`python3 server.py` (optional for connecting with a friend) <br />
+`python3 main.py`<br />
+<bt />
 
 ![msrdc_kJUKxLdjHL](https://github.com/asanguine/Python-Kivy-App/assets/54071079/95d5dd20-6575-43c9-b65a-a28026a1ad1c)
 
