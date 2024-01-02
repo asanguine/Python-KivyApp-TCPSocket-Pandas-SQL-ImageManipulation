@@ -6,7 +6,7 @@ future TODO:<br />
 <br /><br />
 ## To run:
 `source myvenv/bin/activate` <br />
-`pip install -r requirements.txt`
+`pip install -r requirements.txt` <br />
 `python3 server.py` (optional for connecting with a friend) <br />
 `python3 main.py`<br />
 <bt />
