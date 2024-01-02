@@ -6,39 +6,40 @@ future TODO:<br />
 <br /><br />
 <br />
 
-![Code_LmUAFc9Fnj](https://github.com/asanguine/Python-Kivy-App/assets/54071079/7d45bc2d-fe26-44c4-b9ad-82d118a59918)
-<br />
-## Character Creation <br />
-
-![Code_pTOe7XAjDh](https://github.com/asanguine/Python-Kivy-App/assets/54071079/c72171db-43f8-47b5-a64e-2217575a0974)
+![msrdc_kJUKxLdjHL](https://github.com/asanguine/Python-Kivy-App/assets/54071079/95d5dd20-6575-43c9-b65a-a28026a1ad1c)
 
 <br /><br />
-## Timer Set-up <br />
+# Character Creation <br />
 
-![firefox_XaBVelXHcg](https://github.com/asanguine/Python-Kivy-App/assets/54071079/ddc321a1-91a6-4274-ad0b-bddc59f6a42c)
+![msrdc_XkDitInyhO](https://github.com/asanguine/Python-Kivy-App/assets/54071079/320232b4-ca7e-4e60-b7ef-fa1c93beccae)
+
+<br /><br />
+# Timer Set-up <br />
+
+![msrdc_VxuANbg7iQ](https://github.com/asanguine/Python-Kivy-App/assets/54071079/d12b8a2d-db8e-4853-b725-f12db8d33045)
+
+<br />
+
+![msrdc_fn6t7JzbEX](https://github.com/asanguine/Python-Kivy-App/assets/54071079/80f26298-04cd-4338-9447-45840975c99e)
 
 <br />
 
-![msrdc_KbSPsQZdBr](https://github.com/asanguine/Python-Kivy-App/assets/54071079/bf6f255e-7c8c-43a6-b932-3dd9ebfa199e)
+![msrdc_aIbRF3coyY](https://github.com/asanguine/Python-Kivy-App/assets/54071079/a2c69f81-edf3-4abc-8cc4-4730b6777fe1)
 
-<br />
-## Study Stats <br />
+<br /><br />
+# Study Stats <br />
 
-![NVIDIA_Share_T30lc4m2e4](https://github.com/asanguine/Python-Kivy-App/assets/54071079/e60ce3ac-ffc1-49fe-9a22-76e36ab52159)
+![msrdc_vvzAsKu0cY](https://github.com/asanguine/Python-Kivy-App/assets/54071079/3e389eaa-28e0-4aef-86c0-bca692c7f400)
 
-<br />
-<br />
-## Socket connection with another user <br />
+<br /><br />
+# Socket connection with another user <br />
 
-![wsl_3iB7upSaT6](https://github.com/asanguine/Python-Kivy-App/assets/54071079/88c9747c-ce9b-401b-a92f-919d89368199)
+![msrdc_lK8Ecnlyuu](https://github.com/asanguine/Python-Kivy-App/assets/54071079/186d0948-2c6c-47ee-abba-44cd79a03399)
 
-<br />
-<br />
-## Video example of two users <br />
+<br /><br />
+# Video example of two users sending and receiving real time data <br />
 
-
-https://github.com/asanguine/Python-Kivy-App/assets/54071079/1789d88f-c22d-463d-b696-6d0c56af649b
-
+https://github.com/asanguine/Python-Kivy-App/assets/54071079/229e237a-9239-4e39-bcdd-8da222163995
 
 <br />
 
